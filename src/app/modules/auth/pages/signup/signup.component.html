@@ -1,0 +1,42 @@
+<div class="d-flex flex-column align-items-center">
+  <form
+    class="d-flex flex-column align-items-center mt-3"
+    [formGroup]="signupForm"
+    (ngSubmit)="signup()"
+  >
+    <div class="form-group d-flex flex-column align-items-center">
+      <label for="exampleInputEmail1">Username</label>
+      <input
+        type="text"
+        class="form-control signup-input"
+        formControlName="username"
+      />
+    </div>
+    <div class="form-group d-flex flex-column align-items-center">
+      <label for="exampleInputEmail1">Email address</label>
+      <input
+        type="email"
+        class="form-control signup-input"
+        formControlName="email"
+      />
+    </div>
+    <div class="form-group d-flex flex-column align-items-center">
+      <label for="exampleInputPassword1">Password</label>
+      <input
+        type="password"
+        class="form-control signup-input"
+        formControlName="password"
+      />
+    </div>
+    <div
+      *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+      class="alert alert-danger"
+      role="alert"
+    >
+      Your password should be at least 8 characters long.
+    </div>
+    <button type="submit" class="btn btn-dark" [disabled]="!signupForm.valid">
+      Register
+    </button>
+  </form>
+</div>
