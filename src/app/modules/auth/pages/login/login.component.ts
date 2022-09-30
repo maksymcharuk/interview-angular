@@ -8,7 +8,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnDestroy {
   loginForm = this.fb.group({
