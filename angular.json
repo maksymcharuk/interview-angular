@@ -107,5 +107,7 @@
       }
     }
   },
-  "defaultProject": "interview-angular"
+  "cli": {
+    "analytics": false
+  }
 }

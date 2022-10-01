@@ -1,27 +1,27 @@
-<div class="d-flex flex-column align-items-center">
+<div class="login">
   <form
-    class="d-flex flex-column align-items-center mt-3"
+    class="login__form p-inputtext-sm"
     [formGroup]="loginForm"
     (ngSubmit)="login()"
   >
-    <div class="form-group d-flex flex-column align-items-center">
+    <div class="login__form-group">
       <label for="exampleInputEmail1">Email address</label>
-      <input
-        type="email"
-        class="form-control login-input"
-        formControlName="email"
-      />
+      <input pInputText id="float-input" type="email" formControlName="email" />
     </div>
-    <div class="form-group d-flex flex-column align-items-center">
-      <label for="exampleInputPassword1">Password</label>
+    <div class="login__form-group">
+      <label for="exampleInputEmail1">Password</label>
       <input
+        pInputText
+        id="float-input"
         type="password"
-        class="form-control login-input"
         formControlName="password"
       />
     </div>
-    <button type="submit" class="btn btn-dark" [disabled]="!loginForm.valid">
-      Login
-    </button>
+    <button
+      pButton
+      class="login__form-submit"
+      type="submit"
+      label="Login"
+    ></button>
   </form>
 </div>

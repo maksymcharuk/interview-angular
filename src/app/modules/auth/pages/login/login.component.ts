@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -19,7 +19,7 @@ export class LoginComponent implements OnDestroy {
   private loginSub: Subscription | undefined;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private auth: AuthenticationService,
     private router: Router,
     private ss: StorageService
@@ -32,6 +32,10 @@ export class LoginComponent implements OnDestroy {
   }
 
   login() {
+    if (!this.loginForm.valid) {
+      return;
+    }
+
     const credentials = this.loginForm.value;
 
     this.loginSub = this.auth

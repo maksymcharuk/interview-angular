@@ -1,0 +1,34 @@
+<h2>Interviews</h2>
+
+<div class="cards">
+  <p-card
+    [routerLink]="interview.id"
+    *ngFor="let interview of interviews$ | async"
+    class="card"
+  >
+    <p>
+      Candidate:
+      {{ interview.attributes.candidate.data.attributes.firstName }}
+      {{ interview.attributes.candidate.data.attributes.lastName }}
+      ({{ interview.attributes.candidate.data.attributes.email }})
+    </p>
+    <p>
+      Project:
+      {{ interview.attributes.project.data.attributes.name }}
+    </p>
+
+    <div>
+      Blocks:
+      <ul>
+        <li
+          *ngFor="
+            let block of interview.attributes.interviewProcess.data.attributes
+              .blocks
+          "
+        >
+          {{ block.title }} (questions: #{{ block.questions.length }})
+        </li>
+      </ul>
+    </div>
+  </p-card>
+</div>

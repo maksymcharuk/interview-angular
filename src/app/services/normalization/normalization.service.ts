@@ -6,11 +6,14 @@ interface StrapiEntry {
   id: number;
   attributes: any;
 }
+interface StrapiComponentEntry {
+  id: number;
+}
 interface StrapiSingleEntryData {
-  data: StrapiEntry;
+  data: StrapiEntry | StrapiComponentEntry;
 }
 interface StrapiMultiEntryData {
-  data: StrapiEntry[];
+  data: StrapiEntry[] | StrapiComponentEntry[];
 }
 
 @Injectable({
@@ -41,14 +44,15 @@ export class NormalizationService {
   }
 
   private restructureNestedAttributes(
-    v: StrapiEntry,
+    v: StrapiEntry | StrapiComponentEntry,
     nestedAttribute?: string
   ) {
-    if (nestedAttribute) {
+    if (nestedAttribute && 'attributes' in v) {
       v.attributes[nestedAttribute] = v.attributes[nestedAttribute].data.map(
         (nv: StrapiEntry) => ({ id: nv.id, ...nv.attributes })
       );
     }
-    return { id: v.id, ...v.attributes };
+
+    return 'attributes' in v ? { id: v.id, ...v.attributes } : v;
   }
 }

@@ -5,6 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AuthRoutingModule } from './auth-routing.module';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 
@@ -15,6 +18,8 @@ import { SignupComponent } from './pages/signup/signup.component';
     HttpClientModule,
     AuthRoutingModule,
     ReactiveFormsModule,
+    InputTextModule,
+    ButtonModule,
   ],
 })
 export class AuthModule {}

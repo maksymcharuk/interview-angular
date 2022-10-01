@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs';
 import { InterviewTemplateService } from 'src/app/services/interview-template/interview-template.service';
 
 @Component({
@@ -6,12 +7,10 @@ import { InterviewTemplateService } from 'src/app/services/interview-template/in
   templateUrl: './interview-templates.component.html',
   styleUrls: ['./interview-templates.component.scss'],
 })
-export class InterviewTemplatesComponent implements OnInit {
+export class InterviewTemplatesComponent {
   constructor(private interviewTemplateService: InterviewTemplateService) {}
 
-  ngOnInit(): void {
-    this.interviewTemplateService
-      .getInterviewTemplates()
-      .subscribe(console.log);
-  }
+  public interviewTemplates$ = this.interviewTemplateService
+    .getInterviewTemplates()
+    .pipe(map((response) => response.data));
 }

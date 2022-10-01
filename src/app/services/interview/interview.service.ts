@@ -8,21 +8,26 @@ import { NormalizationService } from '../normalization/normalization.service';
 @Injectable({
   providedIn: 'root',
 })
-export class InterviewTemplateService {
-  private url = `${environment.strapiUrl}/interview-templates`;
+export class InterviewService {
+  private url = `${environment.strapiUrl}/interviews`;
 
   constructor(private http: HttpClient, private ns: NormalizationService) {}
 
-  getInterviewTemplates(): Observable<any> {
+  getInterviews(): Observable<any> {
     const query = stringify(
       {
         populate: {
-          blocks: {
+          project: true,
+          candidate: true,
+          interviewProcess: {
             populate: {
-              questions: true,
+              blocks: {
+                populate: {
+                  questions: true,
+                },
+              },
             },
           },
-          tags: true,
         },
       },
       {
@@ -33,16 +38,21 @@ export class InterviewTemplateService {
     return this.http.get(`${this.url}?${query}`);
   }
 
-  getInterviewTemplate(id: number) {
+  getInterview(id: number): Observable<any> {
     const query = stringify(
       {
         populate: {
-          blocks: {
+          project: true,
+          candidate: true,
+          interviewProcess: {
             populate: {
-              questions: true,
+              blocks: {
+                populate: {
+                  questions: true,
+                },
+              },
             },
           },
-          tags: true,
         },
       },
       {

@@ -1,0 +1,23 @@
+<h2>Interview templates</h2>
+
+<div class="cards">
+  <p-card
+    *ngFor="let interviewTemplate of interviewTemplates$ | async"
+    [header]="interviewTemplate.attributes.name"
+    class="card"
+  >
+    <p>{{ interviewTemplate.attributes.description }}</p>
+    <ul>
+      <li *ngFor="let block of interviewTemplate.attributes.blocks">
+        {{ block.title }} (questions: #{{ block.questions.data.length }})
+      </li>
+    </ul>
+    <div class="card__tags">
+      <p-chip
+        *ngFor="let tag of interviewTemplate.attributes.tags.data"
+        [label]="tag.attributes.title"
+        class="card__tag"
+      ></p-chip>
+    </div>
+  </p-card>
+</div>

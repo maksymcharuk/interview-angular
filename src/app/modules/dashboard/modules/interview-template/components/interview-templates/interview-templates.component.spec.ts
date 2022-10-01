@@ -11,9 +11,7 @@ describe('InterviewTemplatesComponent', () => {
       declarations: [ InterviewTemplatesComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(InterviewTemplatesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
