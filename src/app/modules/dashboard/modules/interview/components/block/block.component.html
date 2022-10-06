@@ -1,0 +1,28 @@
+<p-card class="block">
+  <h3 class="block__title">{{ block.title }}</h3>
+  <p-accordion *ngFor="let question of block.questions" [multiple]="true">
+    <p-accordionTab>
+      <ng-template pTemplate="header"
+        ><p-badge
+          *ngIf="question.score != null"
+          [value]="question.score"
+        ></p-badge
+        ><span class="block__question-title">{{
+          question.question
+        }}</span></ng-template
+      >
+      <ng-template pTemplate="content">
+        <div class="block__question-answer">
+          <markdown ngPreserveWhitespaces>
+            {{ question.answer }}
+          </markdown>
+        </div>
+        <app-question-form
+          [question]="question"
+          (onQuestionChange)="onQuestionChange($event)"
+        ></app-question-form>
+      </ng-template>
+    </p-accordionTab>
+  </p-accordion>
+  <p class="block__score">Score: {{ block.score }}</p>
+</p-card>

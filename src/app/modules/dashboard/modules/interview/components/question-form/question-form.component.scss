@@ -1,0 +1,18 @@
+.question-form {
+
+  &__group {
+    display: flex;
+
+    & + & {
+      margin-top: 10px;
+    }
+
+    label {
+      margin-top: 9px;
+    }
+  }
+
+  &__field {
+    margin-left: 10px;
+  }
+}

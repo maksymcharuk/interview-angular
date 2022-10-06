@@ -1,0 +1,19 @@
+.block {
+  &__title {
+    margin-top: 0;
+  }
+
+  &__score {
+    margin-bottom: 0;
+  }
+
+  &__question-title{
+    margin: 0 10px;
+  }
+
+  &__question-answer {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #fff;
+  }
+}

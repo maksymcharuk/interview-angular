@@ -1,0 +1,23 @@
+<div class="question-form">
+  <div class="question-form__group">
+    <label>Score:</label>
+    <div class="question-form__field">
+      <p-selectButton
+        [options]="scores"
+        [(ngModel)]="selectedScore"
+        (onChange)="onChange($event)"
+      ></p-selectButton>
+    </div>
+  </div>
+
+  <div class="question-form__group">
+    <label>Notes:</label>
+    <div class="question-form__field">
+      <textarea
+        pInputTextarea
+        [formControl]="notesControl"
+        [autoResize]="true"
+      ></textarea>
+    </div>
+  </div>
+</div>

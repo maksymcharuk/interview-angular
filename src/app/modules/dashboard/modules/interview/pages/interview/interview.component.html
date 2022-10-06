@@ -1,0 +1,35 @@
+<div class="interview">
+  <h2>Interview</h2>
+
+  <div *ngIf="interview">
+    <p>
+      Candidate:
+      {{ interview.data.attributes.candidate.data.attributes.firstName }}
+      {{ interview.data.attributes.candidate.data.attributes.lastName }}
+      ({{ interview.data.attributes.candidate.data.attributes.email }})
+    </p>
+    <p>
+      Project:
+      {{ interview.data.attributes.project.data.attributes.name }}
+    </p>
+
+    <div class="interview__blocks-section">
+      <div
+        *ngFor="
+          let block of interview.data.attributes.interviewProcess.data
+            .attributes.blocks
+        "
+        class="interview__block"
+      >
+        <app-block
+          [block]="block"
+          (onBlockChange)="onBlockChange($event)"
+        ></app-block>
+      </div>
+    </div>
+    <p>
+      Total score:
+      {{ interview.data.attributes.interviewProcess.data.attributes.score }}
+    </p>
+  </div>
+</div>
