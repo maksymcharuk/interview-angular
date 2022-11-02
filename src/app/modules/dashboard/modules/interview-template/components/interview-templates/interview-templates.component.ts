@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { InterviewTemplateService } from 'src/app/services/interview-template/interview-template.service';
+import { InterviewUtilsService } from 'src/app/services/interview-utils/interview-utils.service';
 
 @Component({
   selector: 'app-interview-templates',
@@ -8,9 +10,18 @@ import { InterviewTemplateService } from 'src/app/services/interview-template/in
   styleUrls: ['./interview-templates.component.scss'],
 })
 export class InterviewTemplatesComponent {
-  constructor(private interviewTemplateService: InterviewTemplateService) {}
+  constructor(
+    private router: Router,
+    private interviewTemplateService: InterviewTemplateService
+  ) {}
 
   public interviewTemplates$ = this.interviewTemplateService
     .getInterviewTemplates()
     .pipe(map((response) => response.data));
+
+  createInterviewFromTemplate(templateId: number) {
+    this.router.navigate(['/interviews/create'], {
+      queryParams: { templateId },
+    });
+  }
 }

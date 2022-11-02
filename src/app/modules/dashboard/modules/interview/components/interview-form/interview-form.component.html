@@ -1,0 +1,146 @@
+<form
+  class="interview-form"
+  [formGroup]="interviewForm"
+  (ngSubmit)="createInterview()"
+>
+  <div class="form-group" *ngIf="cadidates$ | async as candidates">
+    <div class="fieldset">
+      <label class="label" for="candidate">Candidate</label>
+      <p-dropdown
+        class="field"
+        styleClass="full-width"
+        name="candidate"
+        [options]="candidates"
+        [showClear]="true"
+        formControlName="candidate"
+        placeholder="Select a candidate"
+      >
+        <ng-template let-selectedCandidate pTemplate="selectedItem">
+          <div class="country-item country-item-value">
+            {{
+              [
+                selectedCandidate.attributes.firstName,
+                selectedCandidate.attributes.lastName
+              ].join(" ")
+            }}
+          </div>
+        </ng-template>
+        <ng-template let-candidate pTemplate="item">
+          <div class="country-item">
+            {{
+              [
+                candidate.attributes.firstName,
+                candidate.attributes.lastName
+              ].join(" ")
+            }}
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div
+      class="details"
+      *ngIf="selectedCandidate$ | async as selectedCandidate"
+    >
+      <div>
+        Name:
+        {{
+          [
+            selectedCandidate.attributes.firstName,
+            selectedCandidate.attributes.lastName
+          ].join(" ") || "-"
+        }}
+      </div>
+      <div>Email: {{ selectedCandidate.attributes.email }}</div>
+    </div>
+  </div>
+
+  <div class="form-group" *ngIf="projects$ | async as projects">
+    <div class="fieldset">
+      <label class="label" for="project">Project</label>
+      <p-dropdown
+        class="field"
+        styleClass="full-width"
+        name="project"
+        [options]="projects"
+        [showClear]="true"
+        formControlName="project"
+        placeholder="Select a project"
+      >
+        <ng-template let-selectedProject pTemplate="selectedItem">
+          <div class="country-item country-item-value">
+            {{ selectedProject.attributes.name }}
+          </div>
+        </ng-template>
+        <ng-template let-project pTemplate="item">
+          {{ project.attributes.name }}
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="details" *ngIf="selectedProject$ | async as selectedProject">
+      <div>Name: {{ selectedProject.attributes.name || "-" }}</div>
+      <div>
+        Description: {{ selectedProject.attributes.description || "-" }}
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group" *ngIf="templates$ | async as templates">
+    <div class="fieldset">
+      <label class="label" for="interview-template">Interview template</label>
+      <p-dropdown
+        class="field"
+        styleClass="full-width"
+        name="interview-template"
+        [options]="templates"
+        [showClear]="true"
+        formControlName="interviewTemplate"
+        placeholder="Select a template"
+      >
+        <ng-template let-selectedTemplate pTemplate="selectedItem">
+          {{ selectedTemplate.attributes.name }}
+        </ng-template>
+        <ng-template let-template pTemplate="item">
+          {{ template.attributes.name }}
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div
+      class="details"
+      *ngIf="selectedInterviewTemplate$ | async as selectedInterviewTemplate"
+    >
+      <div>Name: {{ selectedInterviewTemplate.attributes.name || "-" }}</div>
+      <div>
+        Description:
+        {{ selectedInterviewTemplate.attributes.description || "-" }}
+      </div>
+      <div>Blocks:</div>
+      <div
+        *ngFor="
+          let block of selectedInterviewTemplate.attributes.blocks;
+          let i = index
+        "
+      >
+        <div>#{{ i + 1 }}</div>
+        <div>Title: {{ block.title }}</div>
+        <div>Description: {{ block.description }}</div>
+        <div>Questions #: {{ block.questions.data.length }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="fieldset">
+      <label for="notes" class="label">Notes</label>
+      <textarea pInputTextarea name="notes"></textarea>
+    </div>
+  </div>
+
+  <button
+    pButton
+    type="submit"
+    class="btn btn-dark"
+    [disabled]="!interviewForm.value"
+  >
+    Create interview
+  </button>
+</form>

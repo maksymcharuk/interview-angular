@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { InterviewService } from 'src/app/services/interview/interview.service';
 
 @Component({

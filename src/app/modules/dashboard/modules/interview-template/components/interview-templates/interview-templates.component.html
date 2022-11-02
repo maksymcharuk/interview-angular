@@ -6,6 +6,9 @@
     [header]="interviewTemplate.attributes.name"
     class="card"
   >
+    <button pButton (click)="createInterviewFromTemplate(interviewTemplate.id)">
+      Create interview
+    </button>
     <p>{{ interviewTemplate.attributes.description }}</p>
     <ul>
       <li *ngFor="let block of interviewTemplate.attributes.blocks">

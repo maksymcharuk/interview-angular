@@ -35,8 +35,12 @@
     >
       Your password should be at least 8 characters long.
     </div>
-    <button type="submit" class="btn btn-dark" [disabled]="!signupForm.valid">
-      Register
-    </button>
+    <button
+      pButton
+      type="submit"
+      class="btn btn-dark"
+      label="Register"
+      [disabled]="!signupForm.valid"
+    ></button>
   </form>
 </div>
