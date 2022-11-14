@@ -1,35 +1,37 @@
 <div class="interview">
   <h2>Interview</h2>
 
-  <div *ngIf="interview">
+  <div *ngIf="interview$ | async as interview">
     <p>
       Candidate:
-      {{ interview.data.attributes.candidate.data.attributes.firstName }}
-      {{ interview.data.attributes.candidate.data.attributes.lastName }}
-      ({{ interview.data.attributes.candidate.data.attributes.email }})
+      {{ interview.candidate.firstName }}
+      {{ interview.candidate.lastName }}
+      ({{ interview.candidate.email }})
     </p>
     <p>
       Project:
-      {{ interview.data.attributes.project.data.attributes.name }}
+      {{ interview.project.name }}
+    </p>
+    <p>
+      Notes:
+      {{ interview.notes }}
     </p>
 
     <div class="interview__blocks-section">
       <div
-        *ngFor="
-          let block of interview.data.attributes.interviewProcess.data
-            .attributes.blocks
-        "
+        *ngFor="let block of interview.interviewProcess.blocks; let i = index"
         class="interview__block"
       >
         <app-block
           [block]="block"
-          (onBlockChange)="onBlockChange($event)"
+          [(activeState)]="activeState[i]"
+          (onBlockChange)="onBlockChange($event, interview.id)"
         ></app-block>
       </div>
     </div>
     <p>
       Total score:
-      {{ interview.data.attributes.interviewProcess.data.attributes.score }}
+      {{ interview.interviewProcess.score }}
     </p>
   </div>
 </div>

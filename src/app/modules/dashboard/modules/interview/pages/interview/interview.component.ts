@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { BehaviorSubject, switchMap } from 'rxjs';
+import Interview from 'src/app/models/interview.model';
+import { QuestionComponent } from 'src/app/models/question-component.model';
 import { InterviewDataService } from '../../services/interview-data/interview-data.service';
 
 @Component({
@@ -9,7 +11,8 @@ import { InterviewDataService } from '../../services/interview-data/interview-da
   styleUrls: ['./interview.component.scss'],
 })
 export class InterviewComponent implements OnInit {
-  public interview: any;
+  public interview$ = new BehaviorSubject<Interview>(new Interview());
+  public activeState: boolean[][] = [[]];
 
   constructor(
     private interviewDataService: InterviewDataService,
@@ -23,12 +26,27 @@ export class InterviewComponent implements OnInit {
           this.interviewDataService.getInterview(params['id'])
         )
       )
-      .subscribe((response: any) => (this.interview = response));
+      .subscribe((response: Interview) => {
+        // TODO(accordion-rerendering): find another soluton to save accordions toogle state during rerenering
+        response.interviewProcess.blocks.forEach((b, i) => {
+          this.activeState[i] = [];
+          b.questions.forEach((q) => {
+            this.activeState[i].push(false);
+          });
+        });
+        this.interview$.next(response);
+      });
   }
 
-  public onBlockChange(question: any) {
+  public onBlockChange(question: QuestionComponent, inerviewId: number) {
     this.interviewDataService
-      .updateQuestion(this.interview, question)
-      .subscribe();
+      .updateQuestion(inerviewId, question.id, {
+        notes: question.notes,
+        score: question.score,
+      })
+      .subscribe((response: Interview) => {
+        console.log(response);
+        this.interview$.next(response);
+      });
   }
 }

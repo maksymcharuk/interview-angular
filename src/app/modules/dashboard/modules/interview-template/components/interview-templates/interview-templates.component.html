@@ -3,22 +3,22 @@
 <div class="cards">
   <p-card
     *ngFor="let interviewTemplate of interviewTemplates$ | async"
-    [header]="interviewTemplate.attributes.name"
+    [header]="interviewTemplate.name || ''"
     class="card"
   >
     <button pButton (click)="createInterviewFromTemplate(interviewTemplate.id)">
       Create interview
     </button>
-    <p>{{ interviewTemplate.attributes.description }}</p>
+    <p>{{ interviewTemplate.description }}</p>
     <ul>
-      <li *ngFor="let block of interviewTemplate.attributes.blocks">
-        {{ block.title }} (questions: #{{ block.questions.data.length }})
+      <li *ngFor="let block of interviewTemplate.blocks">
+        {{ block.title }} (questions: #{{ block.questions.length }})
       </li>
     </ul>
     <div class="card__tags">
       <p-chip
-        *ngFor="let tag of interviewTemplate.attributes.tags.data"
-        [label]="tag.attributes.title"
+        *ngFor="let tag of interviewTemplate.tags"
+        [label]="tag.title || ''"
         class="card__tag"
       ></p-chip>
     </div>

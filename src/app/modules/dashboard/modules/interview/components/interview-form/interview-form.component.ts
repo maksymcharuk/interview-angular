@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
+import { BlockComponent } from 'src/app/models/block-component.model';
 import { CandidateService } from 'src/app/services/candidate/candidate.service';
 import { InterviewTemplateService } from 'src/app/services/interview-template/interview-template.service';
 import { InterviewUtilsService } from 'src/app/services/interview-utils/interview-utils.service';
@@ -27,15 +27,9 @@ export class InterviewFormComponent implements AfterViewInit {
   selectedInterviewTemplate$ =
     this.interviewForm.get('interviewTemplate')?.valueChanges;
 
-  cadidates$ = this.candidateService
-    .getCadidates()
-    .pipe(map((response: any) => response.data));
-  projects$ = this.projectService
-    .getProjects()
-    .pipe(map((response: any) => response.data));
-  templates$ = this.interviewTemplatesService
-    .getInterviewTemplates()
-    .pipe(map((response: any) => response.data));
+  cadidates$ = this.candidateService.getCadidates();
+  projects$ = this.projectService.getProjects();
+  templates$ = this.interviewTemplatesService.getInterviewTemplates();
 
   constructor(
     private router: Router,
@@ -67,5 +61,11 @@ export class InterviewFormComponent implements AfterViewInit {
       .subscribe((response) => {
         this.router.navigate(['/interviews', response.id]);
       });
+  }
+
+  trackBlock(index: number, block: BlockComponent) {
+    console.log(block);
+
+    return block.id;
   }
 }

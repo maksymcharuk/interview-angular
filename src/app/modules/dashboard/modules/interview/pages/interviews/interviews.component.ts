@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import Interview from 'src/app/models/interview.model';
 import { InterviewService } from 'src/app/services/interview/interview.service';
 
 @Component({
@@ -8,9 +9,8 @@ import { InterviewService } from 'src/app/services/interview/interview.service';
   styleUrls: ['./interviews.component.scss'],
 })
 export class InterviewsComponent {
-  public interviews$ = this.interviewService
-    .getInterviews()
-    .pipe(map((response) => response.data));
+  public interviews$: Observable<Interview[]> =
+    this.interviewService.getInterviews();
 
   constructor(private interviewService: InterviewService) {}
 }

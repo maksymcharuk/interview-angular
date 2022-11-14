@@ -1,21 +1,31 @@
 <p-card class="block">
   <h3 class="block__title">{{ block.title }}</h3>
-  <p-accordion *ngFor="let question of block.questions" [multiple]="true">
-    <p-accordionTab>
+  <p-accordion
+    *ngFor="let question of block.questions; let i = index"
+    [multiple]="true"
+  >
+    <p-accordionTab [(selected)]="activeState[i]">
       <ng-template pTemplate="header"
         ><p-badge
           *ngIf="question.score != null"
-          [value]="question.score"
+          [value]="question.score.toString()"
         ></p-badge
         ><span class="block__question-title">{{
-          question.question
+          question.title
         }}</span></ng-template
       >
       <ng-template pTemplate="content">
         <div class="block__question-answer">
-          <markdown ngPreserveWhitespaces>
-            {{ question.answer }}
-          </markdown>
+          <div>
+            Question:
+            <div>{{ question.question }}</div>
+          </div>
+          <div>
+            Answer:
+            <markdown>
+              {{ question.answer }}
+            </markdown>
+          </div>
         </div>
         <app-question-form
           [question]="question"

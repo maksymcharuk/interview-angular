@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { InterviewTemplateService } from 'src/app/services/interview-template/interview-template.service';
-import { InterviewUtilsService } from 'src/app/services/interview-utils/interview-utils.service';
 
 @Component({
   selector: 'app-interview-templates',
@@ -15,9 +14,8 @@ export class InterviewTemplatesComponent {
     private interviewTemplateService: InterviewTemplateService
   ) {}
 
-  public interviewTemplates$ = this.interviewTemplateService
-    .getInterviewTemplates()
-    .pipe(map((response) => response.data));
+  public interviewTemplates$ =
+    this.interviewTemplateService.getInterviewTemplates();
 
   createInterviewFromTemplate(templateId: number) {
     this.router.navigate(['/interviews/create'], {

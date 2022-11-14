@@ -3,30 +3,25 @@
 
   <div class="cards">
     <p-card
-      [routerLink]="interview.id"
+      [routerLink]="interview.id.toString()"
       *ngFor="let interview of interviews$ | async"
       class="card"
     >
       <p>
         Candidate:
-        {{ interview.attributes.candidate.data.attributes.firstName }}
-        {{ interview.attributes.candidate.data.attributes.lastName }}
-        ({{ interview.attributes.candidate.data.attributes.email }})
+        {{ interview.candidate.firstName }}
+        {{ interview.candidate.lastName }}
+        ({{ interview.candidate.email }})
       </p>
       <p>
         Project:
-        {{ interview.attributes.project.data.attributes.name }}
+        {{ interview.project.name }}
       </p>
 
       <div>
         Blocks:
         <ul>
-          <li
-            *ngFor="
-              let block of interview.attributes.interviewProcess.data.attributes
-                .blocks
-            "
-          >
+          <li *ngFor="let block of interview.interviewProcess.blocks">
             {{ block.title }} (questions: #{{ block.questions.length }})
           </li>
         </ul>
