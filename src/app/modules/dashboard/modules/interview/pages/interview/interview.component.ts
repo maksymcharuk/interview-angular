@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, debounceTime, map, merge, switchMap } from 'rxjs';
 import Interview from 'src/app/models/interview.model';
 import { QuestionComponent } from 'src/app/models/question-component.model';
+import { InterviewService } from 'src/app/services/interview/interview.service';
 import { InterviewDataService } from '../../services/interview-data/interview-data.service';
 
 @Component({
@@ -11,11 +13,15 @@ import { InterviewDataService } from '../../services/interview-data/interview-da
   styleUrls: ['./interview.component.scss'],
 })
 export class InterviewComponent implements OnInit {
+  public notesControl = new FormControl();
   public interview$ = new BehaviorSubject<Interview>(new Interview());
   public activeState: boolean[][] = [[]];
+  public maxScore = 0;
+  public progressScore = 0;
 
   constructor(
     private interviewDataService: InterviewDataService,
+    private interviewService: InterviewService,
     private route: ActivatedRoute
   ) {}
 
@@ -36,6 +42,34 @@ export class InterviewComponent implements OnInit {
         });
         this.interview$.next(response);
       });
+
+    this.notesControl.valueChanges
+      .pipe(
+        debounceTime(1000),
+        switchMap((value) =>
+          this.interview$.pipe(map((interview) => ({ value, interview })))
+        ),
+        switchMap((res) => {
+          const { value, interview } = res;
+          return this.interviewService.updateInterview(interview.id, {
+            data: { notes: value },
+          });
+        })
+      )
+      .subscribe();
+
+    this.interview$.subscribe((interview) => {
+      const questionsNumber = interview.interviewProcess.blocks.reduce(
+        (acc, current) => {
+          return acc + current.questions.filter((q) => !!q.score).length;
+        },
+        0
+      );
+      this.maxScore = questionsNumber * 5;
+      this.progressScore = interview.interviewProcess.score
+        ? Math.round((interview.interviewProcess.score / this.maxScore) * 100)
+        : 0;
+    });
   }
 
   public onBlockChange(question: QuestionComponent, inerviewId: number) {
@@ -45,7 +79,6 @@ export class InterviewComponent implements OnInit {
         score: question.score,
       })
       .subscribe((response: Interview) => {
-        console.log(response);
         this.interview$.next(response);
       });
   }

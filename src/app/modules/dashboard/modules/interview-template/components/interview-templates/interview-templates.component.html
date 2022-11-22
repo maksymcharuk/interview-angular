@@ -3,12 +3,16 @@
 <div class="cards">
   <p-card
     *ngFor="let interviewTemplate of interviewTemplates$ | async"
-    [header]="interviewTemplate.name || ''"
     class="card"
   >
-    <button pButton (click)="createInterviewFromTemplate(interviewTemplate.id)">
-      Create interview
-    </button>
+    <div class="card__head">
+      <h3 class="card__title">{{ interviewTemplate.name }}</h3>
+      <p-button
+        icon="pi pi-plus"
+        styleClass="p-button-sm"
+        (click)="createInterviewFromTemplate(interviewTemplate.id)"
+      ></p-button>
+    </div>
     <p>{{ interviewTemplate.description }}</p>
     <ul>
       <li *ngFor="let block of interviewTemplate.blocks">

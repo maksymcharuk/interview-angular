@@ -10,21 +10,19 @@
           *ngIf="question.score != null"
           [value]="question.score.toString()"
         ></p-badge
-        ><span class="block__question-title">{{
-          question.title
-        }}</span></ng-template
+        ><span class="block__question-title"
+          >#{{ i + 1 }} - {{ question.title }}</span
+        ></ng-template
       >
       <ng-template pTemplate="content">
         <div class="block__question-answer">
-          <div>
-            Question:
+          <div class="block__question">
+            <h4 class="block__qa-title">Question:</h4>
             <div>{{ question.question }}</div>
           </div>
-          <div>
-            Answer:
-            <markdown>
-              {{ question.answer }}
-            </markdown>
+          <div class="block__answer">
+            <h4 class="block__qa-title">Answer:</h4>
+            <markdown [data]="question.answer"></markdown>
           </div>
         </div>
         <app-question-form
@@ -34,5 +32,12 @@
       </ng-template>
     </p-accordionTab>
   </p-accordion>
-  <p class="block__score">Score: {{ block.score }}</p>
+  <p class="block__progress">
+    <b>Score: {{ block.score ? block.score + "/" : "" }}{{ maxScore }}</b>
+    <p-progressBar
+      class="block__progress-bar"
+      [value]="progressScore"
+    ></p-progressBar>
+    <span>({{ progressScore }}%)</span>
+  </p>
 </p-card>

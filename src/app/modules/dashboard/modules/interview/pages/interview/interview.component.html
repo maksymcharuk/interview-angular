@@ -12,9 +12,16 @@
       Project:
       {{ interview.project.name }}
     </p>
-    <p>
-      Notes:
-      {{ interview.notes }}
+    <p class="form-group">
+      <label for="notes">Notes:</label>
+      <textarea
+        pInputTextarea
+        id="notes"
+        name="notes"
+        [formControl]="notesControl"
+        [value]="interview.notes"
+        [autoResize]="true"
+      ></textarea>
     </p>
 
     <div class="interview__blocks-section">
@@ -29,9 +36,20 @@
         ></app-block>
       </div>
     </div>
-    <p>
-      Total score:
-      {{ interview.interviewProcess.score }}
+    <p class="interview__progress">
+      <b
+        >Total score:
+        {{
+          interview.interviewProcess.score
+            ? interview.interviewProcess.score + "/"
+            : ""
+        }}{{ maxScore }}</b
+      >
+      <p-progressBar
+        class="interview__progress-bar"
+        [value]="progressScore"
+      ></p-progressBar>
+      <span>({{ progressScore }}%)</span>
     </p>
   </div>
 </div>

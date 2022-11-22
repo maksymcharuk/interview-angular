@@ -9,6 +9,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 import { MarkdownModule } from 'ngx-markdown';
 
@@ -45,6 +46,7 @@ import { InterviewCreateComponent } from './pages/interview-create/interview-cre
     SelectButtonModule,
     InputTextareaModule,
     DropdownModule,
+    ProgressBarModule,
     MarkdownModule.forChild(),
   ],
   providers: [InterviewDataService],

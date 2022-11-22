@@ -9,4 +9,31 @@
   &__block {
     margin-bottom: 15px;
   }
+
+  &__progress {
+    align-items: center;
+    display: flex;
+    width: 500px;
+    max-width: 100%;
+  }
+
+  &__progress-bar {
+    flex: 1 1 auto;
+    margin: 0 10px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    max-width: 100%;
+
+    label {
+      margin-bottom: 5px;
+    }
+
+    textarea {
+      height: 200px !important;
+    }
+  }
 }
